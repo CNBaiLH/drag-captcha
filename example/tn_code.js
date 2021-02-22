@@ -48,8 +48,8 @@ _ajax.prototype = {
         xhr.onreadystatechange = function() {
             if (xhr.readyState !== 4) return;
             (xhr.status === 200) ?
-                callback.success(xhr.responseText, xhr.responseXML) :
-                callback.failure(xhr,status);
+                callback && callback.success(xhr.responseText, xhr.responseXML) :
+                callback && callback.failure(xhr,status);
         };
         if (method !== "POST"&&postVars) {
             url += "?" + this.JSONStringify(postVars);
@@ -174,12 +174,12 @@ var tncode = {
         var haddle = {success:tncode._send_result_success,failure:tncode._send_result_failure};
         tncode._result = false;
         var re = new _ajax();
-        re.request('POST',tncode._currentUrl()+'/login',null,JSON.stringify({"tn_r":tncode._mark_offset,"client_id":clientId}));
+        re.request('POST',tncode._currentUrl()+'/login',haddle,JSON.stringify({"tn_r":tncode._mark_offset,"client_id":clientId}));
     },
     _send_result_success:function(responseText,responseXML){
         tncode._doing = false;
         var jsonObject = JSON.parse(responseText);
-        if(jsonObject.error==0){
+        if(jsonObject.code==0){
             tncode._showmsg('验证成功',1);
             tncode._result = true;
             document.getElementByClassName('hgroup').style.display="block";
