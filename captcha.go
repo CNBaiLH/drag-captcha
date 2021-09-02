@@ -306,8 +306,8 @@ func (c *Captcha) CreateImage(key string,fns ...func(o *Captcha)) (dstImage *ima
 	c.drawMaskOnDstImage()
 	c.store.Set(key, c.maskOffset, c.lifetime)
 	//dstBuffer := bytes.NewBuffer(nil)
-	dstBuffer1, _ := os.Create("test.png")
-	png.Encode(dstBuffer1, c.dstImageRGBA)
+	//dstBuffer1, _ := os.Create("test.png")
+	//png.Encode(dstBuffer1, c.dstImageRGBA)
 
 	//if err = png.Encode(dstBuffer, c.dstImageRGBA); err != nil {
 	//	return nil, err
